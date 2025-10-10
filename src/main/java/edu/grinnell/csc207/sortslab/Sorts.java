@@ -87,7 +87,17 @@ public class Sorts {
     }
 
     public static <T extends Comparable<? super T>> void merge(T[] arr, int first, int last) {
-        mergeHelper(arr, first, (last - first)/2);
+        if(arr[i1] > arr[i2]){
+            swap(arr, i1, i2); 
+        }
+        int c1 = first;
+        int c2 = last;
+        while(c2 != arr.length){
+            if(arr[c1].compareTo(arr[c2]) < 0){
+                //scratch[c1]
+            }
+        }
+
     }
 
     /**
@@ -101,7 +111,7 @@ public class Sorts {
     public static <T extends Comparable<? super T>> void mergeSort(T[] arr) {
         T[] scratch = arr;
 
-        scratch = mergeSplitter(scratch, 0, arr.length);
+        mergeHelper(scratch, 0, arr.length);
     }
     /**
      * Sorts the array according to the quick sort algorithm:
