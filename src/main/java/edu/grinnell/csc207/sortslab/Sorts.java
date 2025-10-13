@@ -1,6 +1,8 @@
-package edu.grinnell.csc207.sortslab;
+//package edu.grinnell.csc207.sortslab;
 
-import java.lang.Arrays;
+import java.util.Arrays;
+
+//import java.util.Arrays;
 
 /**
  * A collection of sorting algorithms over generic arrays.
@@ -82,24 +84,59 @@ public class Sorts {
         }
     }
 
-    public static <T extends Comparable<? super T>> void mergeHelper(T[] arr, int first, int last) {
-        mergeHelper(arr, first, (last - first)/2);
+    /**
+     * This function will recurvily split the arrays into halves, and call merge on all the halves to sort them
+     * @param <T>
+     * @param start
+     * @param end
+     * @param arr
+     */
+    public static <T extends Comparable<? super T>> void mergeHelper(int start, int end, T[] arr, T[]scratchArr){
+        int middle = start + (end-start) / 2;
+        if(end-start > 1){
+            mergeHelper(start, middle, arr, scratchArr);
+            mergeHelper(middle, end, arr, scratchArr);
+            merge(start, end, middle, arr, scratchArr);
+        }
+
+
+
+
     }
 
-    public static <T extends Comparable<? super T>> void merge(T[] arr, int first, int last) {
-        if(arr[i1] > arr[i2]){
-            swap(arr, i1, i2); 
-        }
-        int c1 = first;
-        int c2 = last;
-        while(c2 != arr.length){
-            if(arr[c1].compareTo(arr[c2]) < 0){
-                //scratch[c1]
+    public static <T extends Comparable<? super T>> void merge(int start, int end, int middle, T[] arr, T[] scratchArr){
+        int startI = start;
+        int startJ = middle;
+        int index = start;
+        //While both of the split arrays are not traversed through
+        while(startI < middle && startJ < end){
+            if(arr[startI].compareTo(arr[startJ]) <= 0){
+                scratchArr[index] = arr[startI];
+                startI++;
+                index++;
+            } else {
+                scratchArr[index] = arr[startJ];
+                startJ++;
+                index++;
             }
         }
+        //if one array is not iterated through put the rest of them in the array
+        while(startI < middle){
+            scratchArr[index] = arr[startI];
+            startI++;
+            index++;
+        }
+        while(startJ < end){
+            scratchArr[index] = arr[startJ];
+            startJ++;
+            index++;
+        }
+
+        for(int i = 0; i < arr.length; i++){
+            arr[i] = scratchArr[i];
+        }
 
     }
-
     /**
      * Sorts the array according to the merge sort algorithm:
      * <pre>
@@ -109,9 +146,20 @@ public class Sorts {
      * @param arr the array to sort
      */
     public static <T extends Comparable<? super T>> void mergeSort(T[] arr) {
-        T[] scratch = arr;
+        //T[] scratch = copyOf(arr, arr.length);            Does not work becasue of T[] generic type
+        //Copy all elements into a new array - O(n)
+        T[] scratch = Arrays.copyOf(arr, arr.length); //(T[]) new Object [arr.length];
 
-        mergeHelper(scratch, 0, arr.length);
+        //Hold the middle index of the array
+        int middle = arr.length / 2;
+        //Sort the left side and rightside
+        mergeHelper(0, arr.length, arr, scratch);
+        //Sort both arrays
+        merge(0, arr.length, middle,arr, scratch);
+        //set array to scratc array
+        for(int i = 0; i < arr.length; i++){
+            arr[i] = scratch[i];
+        }
     }
     /**
      * Sorts the array according to the quick sort algorithm:
@@ -124,4 +172,13 @@ public class Sorts {
     public static <T extends Comparable<? super T>> void quickSort(T[] arr) {
         // TODO: fill me in!
     }
+    public static void main(String[] args){
+        Integer[] arr = {11, 5, 6, 9, 3, 2, 1, 4};
+        mergeSort(arr);
+        for(int i = 0; i < arr.length; i++){
+            System.out.print(arr[i] + ", ");
+        }
+    }
 }
+
+
