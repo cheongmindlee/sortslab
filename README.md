@@ -1,8 +1,7 @@
 # Sorts Lab
 
-* Authors: _(TODO: list your names here)_
+* Authors: Carmela Davidson and David Lee
 
 ## Resources Used
 
-* _(TODO: list your resources here!)_
-* ...
+*Prof osera, TTAP, Java API 17, VSCode
