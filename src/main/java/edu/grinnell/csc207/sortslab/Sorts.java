@@ -1,4 +1,4 @@
-//package edu.grinnell.csc207.sortslab;
+package edu.grinnell.csc207.sortslab;
 
 import java.util.Arrays;
 
@@ -172,13 +172,13 @@ public class Sorts {
     public static <T extends Comparable<? super T>> void quickSort(T[] arr) {
         // TODO: fill me in!
     }
-    public static void main(String[] args){
-        Integer[] arr = {11, 5, 6, 9, 3, 2, 1, 4};
-        mergeSort(arr);
-        for(int i = 0; i < arr.length; i++){
-            System.out.print(arr[i] + ", ");
-        }
-    }
+    // public static void main(String[] args){
+    //     Integer[] arr = {11, 5, 6, 9, 3, 2, 1, 4};
+    //     mergeSort(arr);
+    //     for(int i = 0; i < arr.length; i++){
+    //         System.out.print(arr[i] + ", ");
+    //     }
+    // }
 }
 
 
