@@ -152,14 +152,52 @@ public class Sorts {
 
         //Hold the middle index of the array
         int middle = arr.length / 2;
+
         //Sort the left side and rightside
         mergeHelper(0, arr.length, arr, scratch);
-        //Sort both arrays
-        merge(0, arr.length, middle,arr, scratch);
+        
         //set array to scratc array
         for(int i = 0; i < arr.length; i++){
             arr[i] = scratch[i];
         }
+    }
+
+    // public static <T extends Comparable<? super T>> void quickSortHelper2(int start, int end, T[] arr){
+    //     int middle = start + (end-start) / 2;
+    //     if(end-start > 1){
+    //         quickSortHelper(arr, start, middle);
+    //         quickSortHelper(arr, middle, end);
+    //     }
+    // }
+
+    // { 1, 2, 3, 0}
+    // {0, 2,}
+    public static <T extends Comparable<? super T>> void quickSortHelper(T[] arr, int start, int end){
+        //Calculate pivot value
+        T pivotVal = arr[end-1];
+        int startInd = start;
+        int endInd = end - 1;
+        while(startInd != endInd){
+            if(arr[startInd].compareTo(pivotVal) >= 0){
+                if(arr[endInd].compareTo(pivotVal) < 0){
+                    swap(arr, startInd, endInd);
+                     startInd++;
+                     endInd--;
+                } else {
+                    endInd--;
+                }
+            } else {
+            startInd++;
+            }
+            
+        }
+
+        swap(arr, startInd, end-1);
+        if(end - start > 1){
+            quickSortHelper(arr, start, start + (end-start) / 2);
+            quickSortHelper(arr, start + (end-start) / 2, end);
+        }
+
     }
     /**
      * Sorts the array according to the quick sort algorithm:
@@ -170,15 +208,17 @@ public class Sorts {
      * @param arr
      */
     public static <T extends Comparable<? super T>> void quickSort(T[] arr) {
-        // TODO: fill me in!
+        quickSortHelper(arr, 0, arr.length);
     }
-    // public static void main(String[] args){
-    //     Integer[] arr = {11, 5, 6, 9, 3, 2, 1, 4};
-    //     mergeSort(arr);
-    //     for(int i = 0; i < arr.length; i++){
-    //         System.out.print(arr[i] + ", ");
-    //     }
-    // }
+
+
+    public static void main(String[] args){
+        Integer[] arr = { 1, 2, 3, 0, 3 ,5 ,7, 2};
+        quickSort(arr);
+        for(int i = 0; i < arr.length; i++){
+            System.out.print(arr[i] + ", ");
+        }
+    }
 }
 
 
